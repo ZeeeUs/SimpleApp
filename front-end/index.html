@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" type="text/css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Books</title>
+</head>
+
+<body>
+    <div class="list">
+        <div class="books">
+            <p class="title main-t">Books list</p>
+            <ul class="list" id="list-ul">
+            </ul>
+            <button class="add" id="addBtn">Add book</button>
+        </div>
+    </div>
+    <div class="modal" id="addModal">
+        <div class="modal-inner">
+            <span class="close" id="close">&times;</span>
+            <div class="modal-content">
+                <p class="card">Add new book</p>
+                <div class="book-content">
+                    <label for="book-name content-str">Name</label>
+                    <input type="text" class="book-name content-input" id="bookName">
+                </div>
+                <div class="book-content">
+                    <label for="author content-str">Author</label>
+                    <input type="text" class="author content-input" id="author">
+                </div>
+                <div class="book-content">
+                    <label for="publisher content-str">Publisher</label>
+                    <input type="text" class="publisher content-input" id="publisher">
+                </div>
+                <div class="book-content">
+                    <label for="ISBN content-str">ISBN</label>
+                    <input type="text" class="ISBN content-input" id="ISBN">
+                </div>
+                <div class="modal-btns">
+                    <button class="clear m-btn" id="clr">Clear</button>
+                    <button class="save m-btn" id="sv">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="infoModal">
+        <div class="modal-inner">
+            <span class="close" id="close-info">&times;</span>
+            <div class="modal-content">
+                <p class="card">Book's card</p>
+                <div class="book-info">
+                    <label for="book-name content-str">Name</label>
+                    <p type="text" class="book-name content-info" id="bookNameOut"></p>
+                </div>
+                <div class="book-info">
+                    <label for="author content-str">Author</label>
+                    <p type="text" class="author content-info" id="authorOut"></p>
+                </div>
+                <div class="book-info">
+                    <label for="publisher content-str">Publisher</label>
+                    <p type="text" class="publisher content-info" id="publisherOut"></p>
+                </div>
+                <div class="book-info">
+                    <label for="ISBN content-str">ISBN</label>
+                    <p type="text" class="ISBN content-info" id="ISBNOut"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="main.js"></script>
+</body>
+
+</html>

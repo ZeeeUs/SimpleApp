@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+.books {
+    display: flex;
+    height: 1000px;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.main-t {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.item {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 14px;
+}
+
+.title {
+    width: 200px;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 10px;
+    border-radius: 50%;
+    background-color: #fff;
+    cursor: pointer;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    border: none;
+}
+
+.delete {
+    color: #FF0033;
+}
+
+.delete:hover,
+.clear:hover {
+    background-color: #FF0033;
+    color: #fff;
+    box-shadow: 0px 15px 20px rgba(229, 46, 92, 0.559);
+    transform: translateY(-1px);
+}
+
+.info {
+    color: #4070f4;
+}
+
+.info:hover {
+    background-color: #4070f4;
+    color: #fff;
+    box-shadow: 0px 15px 20px rgba(37, 100, 247, 0.581);
+    transform: translateY(-1px);
+}
+
+.icon {
+    font-size: 18px;
+    margin: 5px;
+}
+
+.add {
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 5px;
+    width: 300px;
+    border: none;
+    color: rgb(115, 114, 114);
+    background: transparent;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    letter-spacing: 1px;
+    height: 30px;
+    margin: 10px;
+}
+
+.add:hover,
+.save:hover {
+    color: #fff;
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Modal window */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8)
+}
+
+.modal-inner {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close {
+    color: #888;
+    float: right;
+    font-size: 28px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.close:hover {
+    color: #aaa;
+}
+.modal-content {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.book-content {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0 10px 0;
+}
+.content-input{
+    width: 200px;
+    outline: none;
+}
+.card {
+    margin: 10px;
+    letter-spacing: 1px;
+}
+.m-btn {
+    margin: 14px;
+    width: 150px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    letter-spacing: 2px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+.save {
+    background-color: transparent;
+    color:#2EE59D;
+}
+.clear {
+    background-color: transparent;
+    color: #FF0033;
+}
+
+.clear:hover {
+    color: #fff;
+    background-color: #FF0033;
+}
+
+.save:hover {
+    color: #fff;
+    background-color: #2EE59D;
+}
+
+.content-input {
+    padding: 2px;
+}
+
+.book-info {
+    width: 300px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-ifo {
+    width: 200px;
+}
