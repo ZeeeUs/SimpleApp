@@ -74,7 +74,7 @@ function checkInfo(bookId) {
     });
 
     window.addEventListener("click", (event) => {
-        if (event.target == "modal") {
+        if (event.target === "modal") {
             infoModal.style.display = "none";
         }
     });
@@ -96,7 +96,7 @@ function toogleModal() {
     });
 
     window.addEventListener("click", (event) => {
-        if (event.target == "modal") {
+        if (event.target === "modal") {
             addModal.style.display = "none";
         }
     });
