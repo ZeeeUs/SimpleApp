@@ -24,7 +24,7 @@ function createListItem(id, name, author, publisher, isbn) {
     // Info button
     const infoButton = document.createElement("button");
     infoButton.className = "info btn";
-    infoButton.addEventListener("click", () => checkInfo(infoButton.value));
+    infoButton.addEventListener("click", () => checkInfo(Number(infoButton.value)));
     infoButton.value = id;
     const infoIcon = document.createElement("i");
     infoIcon.className = "bx bx-info-circle icon";
@@ -42,12 +42,17 @@ function init() {
 }
 
 function GetBooksList() {
+    let listOfBook = [];
     fetch("http://127.0.0.1:8088/api/v1/list")
         .then(response => {
             return response.json()
         })
         .then((list) => {
-            list.forEach(book => createListItem(book.ID, book.name, book.author, book.publisher, book.isbn))
+            list.forEach(book => {
+                createListItem(book.ID, book.name, book.author, book.publisher, book.isbn)
+                listOfBook.push(book)
+            })
+            localStorage.setItem("listOfBook", JSON.stringify(listOfBook))
         })
 }
 
@@ -57,11 +62,14 @@ function checkInfo(bookId) {
 
     infoModal.style.display = "block";
 
-    const book = arr.find(item => item.Id === bookId);
+    const rawList = localStorage.getItem("listOfBook"),
+        list = JSON.parse(rawList);
 
-    document.getElementById("bookNameOut").innerHTML = book.Name;
-    document.getElementById("authorOut").innerHTML = book.Author;
-    document.getElementById("publisherOut").innerHTML = book.Publisher;
+    const book = list.find(item => item.ID === bookId);
+
+    document.getElementById("bookNameOut").innerHTML = book.name;
+    document.getElementById("authorOut").innerHTML = book.author;
+    document.getElementById("publisherOut").innerHTML = book.publisher;
     document.getElementById("ISBNOut").innerHTML = book.ISBN;
 
     span.addEventListener("click", () => {
