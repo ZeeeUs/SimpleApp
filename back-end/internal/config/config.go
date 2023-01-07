@@ -19,9 +19,14 @@ type DbConfig struct {
 	Password string `mapstructure:"DB_PASSWORD"`
 }
 
+type FrontConfig struct {
+	Host string `mapstructure:"FRONT_HOST"`
+}
+
 type Config struct {
 	ServerConfig ServerConfig
 	DbConfig     DbConfig
+	FrontConfig  FrontConfig
 }
 
 func SetupSource() {
@@ -39,6 +44,9 @@ func NewConfig() *Config {
 			viper.GetString("DB_NAME"),
 			viper.GetString("DB_USER"),
 			viper.GetString("DB_PASSWORD"),
+		},
+		FrontConfig: FrontConfig{
+			viper.GetString("FRONT_HOST"),
 		},
 	}
 }

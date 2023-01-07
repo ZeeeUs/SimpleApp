@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type Server struct {
@@ -24,12 +25,17 @@ func (s *Server) WithBookHandler(handler BookHandler) *Server {
 	return s
 }
 
-func (s *Server) Run() (err error) {
+func (s *Server) SetCors(handlerWithCors http.Handler) *Server {
+	s.server.Handler = handlerWithCors
+	return s
+}
+
+func (s *Server) Run(corsSettings *cors.Cors) (err error) {
 	InitRoutes(s)
 
 	server := &http.Server{
 		Addr:         s.host,
-		Handler:      s.router,
+		Handler:      corsSettings.Handler(s.router),
 		WriteTimeout: http.DefaultClient.Timeout,
 		ReadTimeout:  http.DefaultClient.Timeout,
 	}

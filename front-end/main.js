@@ -1,17 +1,4 @@
-const arr = [{
-        Id: 1,
-        Name: "First book",
-        Author: "Pushkin",
-        Publisher: "Alpina",
-        ISBN: "777-777-777"
-    }, {
-        Id: 2,
-        Name: 'Second book'
-    }, {
-        Id: 3,
-        Name: 'Third book'
-    }],
-    ul = document.querySelector("#list-ul");
+const ul = document.querySelector("#list-ul");
 ul.className = "list";
 
 window.onload = init();
@@ -19,7 +6,7 @@ document.getElementById("addBtn").addEventListener("click", toogleModal);
 document.getElementById("clr").addEventListener("click", clearFields);
 document.getElementById("sv").addEventListener("click", saveBookData)
 
-function createListItem(Id, Name) {
+function createListItem(id, name, author, publisher, isbn) {
     const li = document.createElement("li"),
         p = document.createElement("p");
     li.className = "item";
@@ -29,7 +16,7 @@ function createListItem(Id, Name) {
     const deleteButton = document.createElement('button');
     deleteButton.addEventListener("click", () => deleteBook(deleteButton.value, ul, li));
     deleteButton.className = "delete btn";
-    deleteButton.value = Id;
+    deleteButton.value = id;
     const deleteIcon = document.createElement("i");
     deleteIcon.className = "bx bx-trash icon";
     deleteButton.appendChild(deleteIcon);
@@ -38,12 +25,12 @@ function createListItem(Id, Name) {
     const infoButton = document.createElement("button");
     infoButton.className = "info btn";
     infoButton.addEventListener("click", () => checkInfo(infoButton.value));
-    infoButton.value = Id;
+    infoButton.value = id;
     const infoIcon = document.createElement("i");
     infoIcon.className = "bx bx-info-circle icon";
     infoButton.appendChild(infoIcon);
 
-    p.innerHTML = Name;
+    p.innerHTML = name;
     li.appendChild(p);
     li.appendChild(deleteButton);
     li.appendChild(infoButton);
@@ -51,9 +38,17 @@ function createListItem(Id, Name) {
 }
 
 function init() {
-    arr.forEach(element => {
-        createListItem(element.Id, element.Name);
-    });
+    GetBooksList();
+}
+
+function GetBooksList() {
+    fetch("http://127.0.0.1:8088/api/v1/list")
+        .then(response => {
+            return response.json()
+        })
+        .then((list) => {
+            list.forEach(book => createListItem(book.ID, book.name, book.author, book.publisher, book.isbn))
+        })
 }
 
 function checkInfo(bookId) {
@@ -62,12 +57,12 @@ function checkInfo(bookId) {
 
     infoModal.style.display = "block";
 
-    const book = arr.find(item => item.Id==bookId);
+    const book = arr.find(item => item.Id === bookId);
 
-    document.getElementById("bookNameOut").innerHTML=book.Name;
-    document.getElementById("authorOut").innerHTML=book.Author;
-    document.getElementById("publisherOut").innerHTML=book.Publisher;
-    document.getElementById("ISBNOut").innerHTML=book.ISBN;
+    document.getElementById("bookNameOut").innerHTML = book.Name;
+    document.getElementById("authorOut").innerHTML = book.Author;
+    document.getElementById("publisherOut").innerHTML = book.Publisher;
+    document.getElementById("ISBNOut").innerHTML = book.ISBN;
 
     span.addEventListener("click", () => {
         infoModal.style.display = "none";

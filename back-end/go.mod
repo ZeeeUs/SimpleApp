@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/gorilla/mux v1.8.0
 	github.com/jackc/pgx v3.6.2+incompatible
+	github.com/rs/cors v1.8.3
 	github.com/rs/zerolog v1.28.0
 	github.com/spf13/viper v1.14.0
 )

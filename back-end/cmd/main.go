@@ -11,7 +11,6 @@ import (
 	bookStorage "github.com/ZeeeUs/SimpleApp/internal/storage"
 	"github.com/ZeeeUs/SimpleApp/internal/transport/http"
 	"github.com/ZeeeUs/SimpleApp/internal/transport/http/handlers"
-
 	"github.com/jackc/pgx"
 	"github.com/rs/zerolog/log"
 )
@@ -30,13 +29,15 @@ func main() {
 
 	storage := bookStorage.New(conn)
 	svc := service.New(log.Logger, storage)
-
 	handler := handlers.New(log.Logger).WithBook(svc)
 	server := http.NewServer(cfg.ServerConfig.Host).WithBookHandler(handler)
-	err := server.Run()
+
+	corsSettings := http.CorsSettings(cfg.FrontConfig.Host)
+	err := server.Run(corsSettings)
 	if err != nil {
 		log.Fatal().Err(err).Msg("server starting error")
 	}
+	log.Info().Msgf("http server starting at host %s", cfg.ServerConfig.Host)
 
 	// graceful shutdown
 	quit := make(chan os.Signal, 1)
