@@ -5,16 +5,18 @@ import (
 	"github.com/rs/zerolog"
 )
 
-type Book interface {
+type BookService interface {
 	GetBooksList() (list []models.Book, err error)
+	DeleteBook(ID uint64) (err error)
+	AddBook(book models.Book) (ID int, err error)
 }
 
 type Handler struct {
 	log         zerolog.Logger
-	BookService Book
+	BookService BookService
 }
 
-func (h *Handler) WithBook(service Book) *Handler {
+func (h *Handler) WithBook(service BookService) *Handler {
 	h.BookService = service
 	return h
 }

@@ -14,7 +14,7 @@ function createListItem(id, name, author, publisher, isbn) {
 
     // Delete button
     const deleteButton = document.createElement('button');
-    deleteButton.addEventListener("click", () => deleteBook(deleteButton.value, ul, li));
+    deleteButton.addEventListener("click", () => deleteBook(Number(deleteButton.value), ul, li));
     deleteButton.className = "delete btn";
     deleteButton.value = id;
     const deleteIcon = document.createElement("i");
@@ -84,7 +84,15 @@ function checkInfo(bookId) {
 }
 
 function deleteBook(bookId, list, item) {
-    console.log(bookId);
+    let localList = JSON.parse(localStorage.getItem("listOfBook"));
+    const index = localList.findIndex(book => console.log(book.ID === bookId));
+    localList.splice(index)
+
+    localStorage.setItem("listOfBook", JSON.stringify(localList))
+
+    fetch(`http://127.0.0.1:8088/api/v1/book/${bookId}`, {
+        method: "DELETE",
+    }).catch((error) => console.error("Error:", error))
     list.removeChild(item);
 }
 
@@ -111,14 +119,23 @@ function clearFields() {
 }
 
 function saveBookData() {
-    let obj = {
-        Id: Math.floor(Math.random() * 10),
-        Name: document.getElementById("bookName").value,
-        // Author: document.getElementById("author").value,
-        // Publisher: document.getElementById("publisher").value,
-        // ISBN: document.getElementById("ISBN").value
+    let bookId;
+    let book = {
+        name: document.getElementById("bookName").value,
+        author: document.getElementById("author").value,
+        publisher: document.getElementById("publisher").value,
+        ISBN: document.getElementById("ISBN").value
     };
-    document.getElementById("clr").click();
 
-    createListItem(obj.Id, obj.Name);
+    fetch("http://127.0.0.1:8088/api/v1/book/add", {
+        method: "POST",
+        // headers: {
+        //     "Content-Type": "application/json;charset=utf-8",
+        // },
+        body: JSON.stringify(book),
+    }).then(response => console.log(response))
+
+
+    document.getElementById("clr").click();
+    createListItem(bookId, book.name, book.author, book.publisher, book.isbn);
 }

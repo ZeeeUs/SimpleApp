@@ -17,16 +17,13 @@ type Server struct {
 }
 
 type BookHandler interface {
-	BookHandler(w http.ResponseWriter, r *http.Request)
+	GetList(w http.ResponseWriter, r *http.Request)
+	DeleteBook(w http.ResponseWriter, r *http.Request)
+	AddBook(w http.ResponseWriter, r *http.Request)
 }
 
 func (s *Server) WithBookHandler(handler BookHandler) *Server {
 	s.BookHandler = handler
-	return s
-}
-
-func (s *Server) SetCors(handlerWithCors http.Handler) *Server {
-	s.server.Handler = handlerWithCors
 	return s
 }
 
