@@ -4,9 +4,9 @@ ul.className = "list";
 window.onload = init();
 document.getElementById("addBtn").addEventListener("click", toogleModal);
 document.getElementById("clr").addEventListener("click", clearFields);
-document.getElementById("sv").addEventListener("click", saveBookData)
+document.getElementById("sv").addEventListener("click", addBook)
 
-function createListItem(id, name, author, publisher, isbn) {
+function createListItem(id, name) {
     const li = document.createElement("li"),
         p = document.createElement("p");
     li.className = "item";
@@ -49,7 +49,7 @@ function GetBooksList() {
         })
         .then((list) => {
             list.forEach(book => {
-                createListItem(book.ID, book.name, book.author, book.publisher, book.isbn)
+                createListItem(book.ID, book.name)
                 listOfBook.push(book)
             })
             localStorage.setItem("listOfBook", JSON.stringify(listOfBook))
@@ -85,8 +85,8 @@ function checkInfo(bookId) {
 
 function deleteBook(bookId, list, item) {
     let localList = JSON.parse(localStorage.getItem("listOfBook"));
-    const index = localList.findIndex(book => console.log(book.ID === bookId));
-    localList.splice(index)
+    const index = localList.findIndex(book => book.ID === bookId);
+    localList.splice(index, 1)
 
     localStorage.setItem("listOfBook", JSON.stringify(localList))
 
@@ -118,24 +118,30 @@ function clearFields() {
     fields.forEach(field => field.value = "");
 }
 
-function saveBookData() {
-    let bookId;
+function addBook() {
     let book = {
         name: document.getElementById("bookName").value,
         author: document.getElementById("author").value,
         publisher: document.getElementById("publisher").value,
         ISBN: document.getElementById("ISBN").value
-    };
+    }
 
-    fetch("http://127.0.0.1:8088/api/v1/book/add", {
+    let localeList = JSON.parse(localStorage.getItem("listOfBook"))
+
+    fetch("http://127.0.0.1:8088/api/v1/book", {
         method: "POST",
         // headers: {
         //     "Content-Type": "application/json;charset=utf-8",
         // },
         body: JSON.stringify(book),
-    }).then(response => console.log(response))
-
+    }).then(response => {
+        return response.json()
+    }).then((data) => {
+        book.ID = data
+        localeList.push(book)
+        localStorage.setItem("listOfBook", JSON.stringify(localeList))
+        createListItem(book.ID, book.name);
+    }).catch((error) => console.error("Error:", error))
 
     document.getElementById("clr").click();
-    createListItem(bookId, book.name, book.author, book.publisher, book.isbn);
 }
