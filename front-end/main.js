@@ -62,15 +62,16 @@ function checkInfo(bookId) {
 
     infoModal.style.display = "block";
 
-    const rawList = localStorage.getItem("listOfBook"),
-        list = JSON.parse(rawList);
+    const list = JSON.parse(localStorage.getItem("listOfBook"));
 
     const book = list.find(item => item.ID === bookId);
 
-    document.getElementById("bookNameOut").innerHTML = book.name;
-    document.getElementById("authorOut").innerHTML = book.author;
-    document.getElementById("publisherOut").innerHTML = book.publisher;
-    document.getElementById("ISBNOut").innerHTML = book.ISBN;
+    document.getElementById("bookNameOut").value = book.name;
+    document.getElementById("authorOut").value = book.author;
+    document.getElementById("publisherOut").value = book.publisher;
+    document.getElementById("ISBNOut").value = book.ISBN;
+
+    document.getElementById("change").addEventListener("click", () => updateBook(bookId))
 
     span.addEventListener("click", () => {
         infoModal.style.display = "none";
@@ -94,6 +95,30 @@ function deleteBook(bookId, list, item) {
         method: "DELETE",
     }).catch((error) => console.error("Error:", error))
     list.removeChild(item);
+}
+
+function updateBook(bookId) {
+    const localList = JSON.parse(localStorage.getItem("listOfBook"))
+    const currentBook = localList.find(book => book.ID === bookId)
+
+    let newBook = {
+        ID: bookId,
+        name: document.getElementById("bookNameOut").value,
+        author: document.getElementById("authorOut").value,
+        publisher: document.getElementById("publisherOut").value,
+        ISBN: document.getElementById("ISBNOut").value
+    }
+
+    if (JSON.stringify(currentBook) != JSON.stringify(newBook)) {
+        console.log(JSON.stringify(newBook))
+        fetch(`http://127.0.0.1:8088/api/v1/book/upd/${bookId}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newBook)
+        }).catch((error) => console.error("Error:", error))
+    }
 }
 
 function toogleModal() {

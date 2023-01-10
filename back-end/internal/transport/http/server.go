@@ -20,6 +20,7 @@ type BookHandler interface {
 	GetList(w http.ResponseWriter, r *http.Request)
 	DeleteBook(w http.ResponseWriter, r *http.Request)
 	AddBook(w http.ResponseWriter, r *http.Request)
+	UpdateBook(w http.ResponseWriter, r *http.Request)
 }
 
 func (s *Server) WithBookHandler(handler BookHandler) *Server {

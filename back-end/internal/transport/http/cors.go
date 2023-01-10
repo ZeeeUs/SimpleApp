@@ -12,17 +12,22 @@ func CorsSettings(frontHost string) *cors.Cors {
 			http.MethodGet,
 			http.MethodDelete,
 			http.MethodPost,
+			http.MethodPut,
 		},
 		AllowedOrigins: []string{
 			frontHost,
 		},
 		AllowedHeaders: []string{
 			"Content-Type",
+			"Accept",
+			"Accept-Language",
 		},
 		AllowCredentials:   true,
 		OptionsPassthrough: true,
 		ExposedHeaders: []string{
 			"Content-Type",
+			"Accept",
+			"Accept-Language",
 		},
 		Debug: true,
 	})

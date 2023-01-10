@@ -9,6 +9,7 @@ type BookService interface {
 	GetBooksList() (list []models.Book, err error)
 	DeleteBook(ID uint64) (err error)
 	AddBook(book models.Book) (ID int, err error)
+	UpdateBook(book models.Book) (err error)
 }
 
 type Handler struct {

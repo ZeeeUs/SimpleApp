@@ -150,14 +150,16 @@ ul {
     flex-direction: column;
 }
 
-.book-content {
-    width: 400px;
+.book-content,
+.book-info {
+    width: 300px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 10px 0 10px 0;
 }
-.content-input{
+.content-input,
+.content-ifo {
     width: 200px;
     outline: none;
 }
@@ -183,6 +185,11 @@ ul {
     color: #FF0033;
 }
 
+.save-change {
+    color: rgb(115, 114, 114);
+    background-color: transparent;
+}
+
 .clear:hover {
     color: #fff;
     background-color: #FF0033;
@@ -193,18 +200,23 @@ ul {
     background-color: #2EE59D;
 }
 
+.save-change:hover {
+    color: #fff;
+    background-color: #d0d000;
+    box-shadow: 0px 15px 20px rgba(255, 247, 0, 0.44);
+}
+
 .content-input {
     padding: 2px;
 }
 
-.book-info {
-    width: 300px;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .content-ifo {
     width: 200px;
+}
+
+.save-changes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 14px;
 }

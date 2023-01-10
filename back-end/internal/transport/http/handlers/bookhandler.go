@@ -30,7 +30,7 @@ func (h *Handler) DeleteBook(w http.ResponseWriter, r *http.Request) {
 
 	bookID, err := strconv.ParseUint(mux.Vars(r)["id"], 10, 64)
 	if err != nil {
-		h.log.Error().Msgf("can't get course id from url: %s", err)
+		h.log.Error().Msgf("can't get book id from url: %s", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -49,7 +49,7 @@ func (h *Handler) AddBook(w http.ResponseWriter, r *http.Request) {
 
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
 		h.log.Error().Msgf("can't decode book from request: %s", err)
-		//w.WriteHeader(http.StatusInternalServerError)
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
@@ -68,5 +68,36 @@ func (h *Handler) AddBook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Write(jsonID)
+	w.WriteHeader(http.StatusOK)
+}
+
+func (h *Handler) UpdateBook(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	var book models.Book
+
+	bookID, err := strconv.ParseUint(mux.Vars(r)["id"], 10, 64)
+	if err != nil {
+		h.log.Error().Msgf("can't get book id from url: %s", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err = json.NewDecoder(r.Body).Decode(&book); err != nil {
+		h.log.Error().Msgf("can't decode book from request: %s", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	// DON'T DO THAT ON PROD SERVICE
+	// USE DTO
+	book.ID = bookID
+
+	err = h.BookService.UpdateBook(book)
+	if err != nil {
+		h.log.Error().Msgf("can't update the book: %s", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusOK)
 }

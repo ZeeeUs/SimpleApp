@@ -43,6 +43,14 @@ func (s *Storage) AddBook(book models.Book) (ID int, err error) {
 	return
 }
 
+func (s *Storage) UpdateBook(book models.Book) (err error) {
+	query := "UPDATE public.Books SET name=$1, author=$2, publisher=$3, isbn=$4 WHERE id=$5"
+	if _, err = s.conn.Exec(query, book.Name, book.Author, book.Publisher, book.ISBN, book.ID); err != nil {
+		return
+	}
+	return
+}
+
 func New(conn *pgx.Conn) *Storage {
 	return &Storage{
 		conn: conn,

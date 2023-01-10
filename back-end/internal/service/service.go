@@ -10,6 +10,7 @@ type Storage interface {
 	GetBooksList() (list []models.Book, err error)
 	DeleteBook(ID uint64) (err error)
 	AddBook(book models.Book) (ID int, err error)
+	UpdateBook(book models.Book) (err error)
 }
 
 type Service struct {
@@ -27,6 +28,10 @@ func (s *Service) DeleteBook(ID uint64) (err error) {
 
 func (s *Service) AddBook(book models.Book) (ID int, err error) {
 	return s.storage.AddBook(book)
+}
+
+func (s *Service) UpdateBook(book models.Book) (err error) {
+	return s.storage.UpdateBook(book)
 }
 
 func New(log zerolog.Logger, storage Storage) *Service {
